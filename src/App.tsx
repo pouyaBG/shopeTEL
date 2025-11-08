@@ -1,35 +1,36 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useState } from 'react';
+import { BottomNavigation } from './components/layout/BottomNavigation';
+import { MobileLayout } from './components/layout/MobileLayout';
+import { CartPage } from './pages/CartPage';
+import { OrdersPage } from './pages/OrdersPage';
+import { ProductsPage } from './pages/ProductsPage';
+import { ProfilePage } from './pages/ProfilePage';
+import type { NavigationTab } from './types/navigation';
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [activeTab, setActiveTab] = useState<NavigationTab>('products');
+
+  const renderPage = () => {
+    switch (activeTab) {
+      case 'products':
+        return <ProductsPage />;
+      case 'cart':
+        return <CartPage />;
+      case 'orders':
+        return <OrdersPage />;
+      case 'profile':
+        return <ProfilePage />;
+      default:
+        return <ProductsPage />;
+    }
+  };
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    <MobileLayout>
+      {renderPage()}
+      <BottomNavigation activeTab={activeTab} onTabChange={setActiveTab} />
+    </MobileLayout>
+  );
 }
 
-export default App
+export default App;
