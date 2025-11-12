@@ -1,0 +1,43 @@
+import type { Address } from '../types/user';
+
+export const mockAddresses: Address[] = [
+  {
+    id: '1',
+    title: 'خانه',
+    provinceId: '8',
+    provinceName: 'تهران',
+    cityId: '301',
+    cityName: 'تهران',
+    postalCode: '1234567890',
+    address: 'خیابان ولیعصر، خیابان توانیر، پلاک 123، واحد 5',
+    receiverName: 'پویا محمدی',
+    receiverPhone: '09123456789',
+    isDefault: true,
+  },
+  {
+    id: '2',
+    title: 'محل کار',
+    provinceId: '8',
+    provinceName: 'تهران',
+    cityId: '301',
+    cityName: 'تهران',
+    postalCode: '9876543210',
+    address: 'خیابان آزادی، نرسیده به میدان آزادی، پلاک 456',
+    receiverName: 'پویا محمدی',
+    receiverPhone: '09123456789',
+    isDefault: false,
+  },
+  {
+    id: '3',
+    title: 'خانه والدین',
+    provinceId: '3',
+    provinceName: 'اصفهان',
+    cityId: '101',
+    cityName: 'اصفهان',
+    postalCode: '8154826598',
+    address: 'خیابان چهارباغ، کوچه گلستان، پلاک 78',
+    receiverName: 'علی محمدی',
+    receiverPhone: '09131234567',
+    isDefault: false,
+  },
+];

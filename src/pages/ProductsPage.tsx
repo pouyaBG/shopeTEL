@@ -1,15 +1,21 @@
 import React, { useState } from "react";
 import { ProductCard } from "../components/products/ProductCard";
 import { Drawer } from "../components/common/Drawer";
+import { Modal } from "../components/common/Modal";
 import { mockProducts } from "../data/products";
 import type { Product } from "../types/product";
 import { FadersIcon, MagnifyingGlassIcon } from "@phosphor-icons/react";
 import { XIcon } from "@phosphor-icons/react/dist/ssr";
+import { useCart } from "../contexts/CartContext";
 
 export const ProductsPage: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCategory, setSelectedCategory] = useState<string>("all");
   const [isFilterDrawerOpen, setIsFilterDrawerOpen] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isRemoveModalOpen, setIsRemoveModalOpen] = useState(false);
+  const [productToRemove, setProductToRemove] = useState<Product | null>(null);
+  const { addToCart, removeFromCart } = useCart();
 
   // استخراج دسته‌بندی‌های منحصر به فرد
   const categories = [
@@ -28,8 +34,21 @@ export const ProductsPage: React.FC = () => {
   });
 
   const handleAddToCart = (product: Product) => {
-    console.log("Added to cart:", product);
-    // TODO: اضافه کردن به سبد خرید
+    addToCart(product);
+    setIsModalOpen(true);
+  };
+
+  const handleRequestRemove = (product: Product) => {
+    setProductToRemove(product);
+    setIsRemoveModalOpen(true);
+  };
+
+  const handleConfirmRemove = () => {
+    if (productToRemove) {
+      removeFromCart(productToRemove.id);
+    }
+    setIsRemoveModalOpen(false);
+    setProductToRemove(null);
   };
 
   const handleCategorySelect = (category: string) => {
@@ -129,6 +148,7 @@ export const ProductsPage: React.FC = () => {
                   key={product.id}
                   product={product}
                   onAddToCart={handleAddToCart}
+                  onRequestRemove={handleRequestRemove}
                 />
               ))}
             </div>
@@ -159,6 +179,47 @@ export const ProductsPage: React.FC = () => {
           ))}
         </div>
       </Drawer>
+
+      {/* Add to Cart Success Modal */}
+      <Modal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        title="افزوده شد!"
+        message="محصول با موفقیت به سبد خرید شما اضافه شد"
+        primaryButton={{
+          label: "رفتن به سبد خرید",
+          onClick: () => {
+            setIsModalOpen(false);
+            window.dispatchEvent(new CustomEvent('navigateToCart'));
+          },
+        }}
+        secondaryButton={{
+          label: "ادامه خرید",
+          onClick: () => setIsModalOpen(false),
+        }}
+      />
+
+      {/* Remove from Cart Confirmation Modal */}
+      <Modal
+        isOpen={isRemoveModalOpen}
+        onClose={() => {
+          setIsRemoveModalOpen(false);
+          setProductToRemove(null);
+        }}
+        title="حذف از سبد خرید"
+        message={productToRemove ? `آیا مطمئن هستید که می‌خواهید "${productToRemove.name}" را از سبد خرید حذف کنید؟` : ""}
+        primaryButton={{
+          label: "بله، حذف کن",
+          onClick: handleConfirmRemove,
+        }}
+        secondaryButton={{
+          label: "انصراف",
+          onClick: () => {
+            setIsRemoveModalOpen(false);
+            setProductToRemove(null);
+          },
+        }}
+      />
     </div>
   );
 };
