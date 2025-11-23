@@ -5,7 +5,7 @@ interface ModalProps {
   isOpen: boolean;
   onClose: () => void;
   title: string;
-  message: string;
+  message: string | React.ReactNode;
   primaryButton?: {
     label: string;
     onClick: () => void;
@@ -41,12 +41,12 @@ export const Modal: React.FC<ModalProps> = ({
     <>
       {/* Backdrop */}
       <div
-        className="fixed inset-0 bg-black/50 z-[300] transition-opacity duration-300 animate-fade-in"
+        className="fixed inset-0 bg-black/50 z-300 transition-opacity duration-300 animate-fade-in"
         onClick={onClose}
       />
 
       {/* Modal */}
-      <div className="fixed top-1/2 left-1/2 bg-white rounded-3xl z-[301] w-[90%] max-w-[400px] shadow-[0_8px_32px_rgba(0,0,0,0.2)] animate-scale-in" style={{ transform: 'translate(-50%, -50%)' }}>
+      <div className="fixed top-1/2 left-1/2 bg-white rounded-3xl z-301 w-[90%] max-w-[400px] shadow-[0_8px_32px_rgba(0,0,0,0.2)] animate-scale-in" style={{ transform: 'translate(-50%, -50%)' }}>
         {/* Close Button */}
         <button
           onClick={onClose}
@@ -67,7 +67,9 @@ export const Modal: React.FC<ModalProps> = ({
           <h3 className="text-xl font-bold text-gray-800 mb-2">{title}</h3>
 
           {/* Message */}
-          <p className="text-sm text-gray-600 leading-relaxed mb-6">{message}</p>
+          <div className="text-sm text-gray-600 leading-relaxed mb-6">
+            {typeof message === 'string' ? <p>{message}</p> : message}
+          </div>
 
           {/* Buttons */}
           <div className="flex flex-col gap-3 w-full">

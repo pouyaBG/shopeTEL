@@ -1,16 +1,28 @@
-import React, { useState } from 'react';
-import { useCart } from '../contexts/CartContext';
-import { Trash, Plus, Minus, ShoppingCartSimple } from '@phosphor-icons/react';
-import { Modal } from '../components/common/Modal';
+import {
+  MinusIcon,
+  PlusIcon,
+  ShoppingCartSimpleIcon,
+  TrashIcon,
+} from "@phosphor-icons/react";
+import React, { useState } from "react";
+import { Modal } from "../components/common/Modal";
+import { useCart } from "../contexts/CartContext";
 
 export const CartPage: React.FC = () => {
-  const { items, removeFromCart, increaseQuantity, decreaseQuantity, clearCart, totalPrice } = useCart();
+  const {
+    items,
+    removeFromCart,
+    increaseQuantity,
+    decreaseQuantity,
+    clearCart,
+    totalPrice,
+  } = useCart();
   const [showClearModal, setShowClearModal] = useState(false);
   const [showRemoveModal, setShowRemoveModal] = useState(false);
   const [itemToRemove, setItemToRemove] = useState<string | null>(null);
 
   const formatPrice = (price: number): string => {
-    return new Intl.NumberFormat('fa-IR').format(price);
+    return new Intl.NumberFormat("fa-IR").format(price);
   };
 
   const deliveryFee = 50000; // هزینه ارسال ثابت
@@ -21,7 +33,9 @@ export const CartPage: React.FC = () => {
       <div className="flex-1 flex items-center justify-center p-10 bg-linear-to-b from-gray-50 to-white">
         <div className="text-center max-w-xs">
           <div className="text-[80px] mb-5 opacity-70">🛒</div>
-          <h2 className="text-2xl font-bold text-gray-800 mb-3">سبد خرید خالی است</h2>
+          <h2 className="text-2xl font-bold text-gray-800 mb-3">
+            سبد خرید خالی است
+          </h2>
           <p className="text-[15px] text-gray-500 leading-relaxed">
             هنوز محصولی به سبد خرید اضافه نکرده‌اید
           </p>
@@ -37,13 +51,14 @@ export const CartPage: React.FC = () => {
         <header className="bg-linear-to-br from-primary-start to-primary-end text-white px-5 py-5 md:py-4">
           <div className="flex items-center justify-between">
             <div>
-              <h1 className="m-0 text-xl md:text-lg font-bold mb-1">سبد خرید</h1>
+              <h1 className="m-0 text-xl md:text-lg font-bold mb-1">
+                سبد خرید
+              </h1>
               <p className="m-0 text-xs opacity-90">{items.length} محصول</p>
             </div>
             <button
               onClick={() => setShowClearModal(true)}
-              className="px-4 py-2 bg-white/20 text-white rounded-xl text-sm font-medium border-none cursor-pointer transition-all duration-200 hover:bg-white/30"
-            >
+              className="px-4 py-2 bg-white/20 text-white rounded-xl text-sm font-medium border-none cursor-pointer transition-all duration-200 hover:bg-white/30">
               پاک کردن همه
             </button>
           </div>
@@ -56,11 +71,10 @@ export const CartPage: React.FC = () => {
           {items.map((item) => (
             <div
               key={item.id}
-              className="bg-white rounded-2xl p-4 shadow-[0_2px_8px_rgba(0,0,0,0.08)] transition-all duration-300 hover:shadow-[0_4px_16px_rgba(0,0,0,0.12)]"
-            >
+              className="bg-white rounded-2xl p-4 shadow-[0_2px_8px_rgba(0,0,0,0.08)] transition-all duration-300 hover:shadow-[0_4px_16px_rgba(0,0,0,0.12)]">
               <div className="flex gap-3">
                 {/* Product Image */}
-                <div className="relative w-24 h-24 flex-shrink-0 rounded-xl overflow-hidden bg-gray-100">
+                <div className="relative w-24 h-24 shrink-0 rounded-xl overflow-hidden bg-gray-100">
                   <img
                     src={item.image}
                     alt={item.name}
@@ -83,19 +97,25 @@ export const CartPage: React.FC = () => {
                       <button
                         onClick={() => decreaseQuantity(item.id)}
                         disabled={item.quantity <= 1}
-                        className="w-8 h-8 flex items-center justify-center bg-white rounded-lg border-none cursor-pointer transition-all duration-200 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
-                      >
-                        <Minus size={16} weight="bold" className="text-gray-700" />
+                        className="w-8 h-8 flex items-center justify-center bg-white rounded-lg border-none cursor-pointer transition-all duration-200 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed">
+                        <MinusIcon
+                          size={16}
+                          weight="bold"
+                          className="text-gray-700"
+                        />
                       </button>
-                      <span className="text-sm font-bold text-gray-800 min-w-[24px] text-center">
+                      <span className="text-sm font-bold text-gray-800 min-w-6 text-center">
                         {item.quantity}
                       </span>
                       <button
                         onClick={() => increaseQuantity(item.id)}
                         disabled={item.quantity >= item.stock}
-                        className="w-8 h-8 flex items-center justify-center bg-white rounded-lg border-none cursor-pointer transition-all duration-200 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
-                      >
-                        <Plus size={16} weight="bold" className="text-gray-700" />
+                        className="w-8 h-8 flex items-center justify-center bg-white rounded-lg border-none cursor-pointer transition-all duration-200 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed">
+                        <PlusIcon
+                          size={16}
+                          weight="bold"
+                          className="text-gray-700"
+                        />
                       </button>
                     </div>
 
@@ -119,9 +139,8 @@ export const CartPage: React.FC = () => {
                     setItemToRemove(item.id);
                     setShowRemoveModal(true);
                   }}
-                  className="self-start p-2 rounded-lg bg-transparent border-none cursor-pointer transition-colors duration-200 hover:bg-red-50"
-                >
-                  <Trash size={20} weight="bold" className="text-red-500" />
+                  className="self-start p-2 rounded-lg bg-transparent border-none cursor-pointer transition-colors duration-200 hover:bg-red-50">
+                  <TrashIcon size={20} weight="bold" className="text-red-500" />
                 </button>
               </div>
 
@@ -145,22 +164,30 @@ export const CartPage: React.FC = () => {
           <div className="flex flex-col gap-2 mb-4">
             <div className="flex items-center justify-between text-sm">
               <span className="text-gray-600">جمع کل محصولات:</span>
-              <span className="font-semibold text-gray-800">{formatPrice(totalPrice)} تومان</span>
+              <span className="font-semibold text-gray-800">
+                {formatPrice(totalPrice)} تومان
+              </span>
             </div>
             <div className="flex items-center justify-between text-sm">
               <span className="text-gray-600">هزینه ارسال:</span>
-              <span className="font-semibold text-gray-800">{formatPrice(deliveryFee)} تومان</span>
+              <span className="font-semibold text-gray-800">
+                {formatPrice(deliveryFee)} تومان
+              </span>
             </div>
             <div className="h-px bg-gray-200 my-1" />
             <div className="flex items-center justify-between">
-              <span className="text-base font-bold text-gray-800">مبلغ قابل پرداخت:</span>
-              <span className="text-lg font-bold text-primary-start">{formatPrice(finalPrice)} تومان</span>
+              <span className="text-base font-bold text-gray-800">
+                مبلغ قابل پرداخت:
+              </span>
+              <span className="text-lg font-bold text-primary-start">
+                {formatPrice(finalPrice)} تومان
+              </span>
             </div>
           </div>
 
           {/* Checkout Button */}
           <button className="w-full px-6 py-4 bg-linear-to-br from-primary-start to-primary-end text-white border-none rounded-xl text-base font-bold cursor-pointer transition-all duration-300 hover:shadow-[0_4px_12px_rgba(102,126,234,0.4)] hover:-translate-y-0.5 active:translate-y-0 flex items-center justify-center gap-2">
-            <ShoppingCartSimple size={24} weight="fill" />
+            <ShoppingCartSimpleIcon size={24} weight="fill" />
             <span>تکمیل خرید</span>
           </button>
         </div>

@@ -1,0 +1,14 @@
+version: '3.8'
+
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3000:80"
+    container_name: shope-tel
+    restart: unless-stopped
+    # Uncomment to use custom nginx config
+    volumes:
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf:ro
