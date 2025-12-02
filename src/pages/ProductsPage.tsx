@@ -1,6 +1,6 @@
 import {
   MagnifyingGlassIcon,
-  SlidersHorizontalIcon
+  SlidersHorizontalIcon,
 } from "@phosphor-icons/react";
 import { XIcon } from "@phosphor-icons/react/dist/ssr";
 import React, { useState } from "react";
@@ -28,14 +28,14 @@ const heroSlides: Slide[] = [
   {
     id: "2",
     image:
-      "https://images.unsplash.com/photo-1556656793-08538906a9f8?w=1200&h=600&fit=crop",
+      "https://images.unsplash.com/photo-1607082348824-0a96f2a4b9da?w=1200&h=600&fit=crop",
     title: "لوازم جانبی گیمینگ",
     description: "بهترین قیمت‌ها در بازار",
   },
   {
     id: "3",
     image:
-      "https://images.unsplash.com/photo-1625948515291-69613efd103f?w=1200&h=600&fit=crop",
+      "https://images.unsplash.com/photo-1607082348824-0a96f2a4b9da?w=1200&h=600&fit=crop",
     title: "ساعت‌های هوشمند",
     description: "پیشنهاد ویژه امروز",
   },
@@ -181,7 +181,9 @@ export const ProductsPage: React.FC<ProductsPageProps> = ({
         {/* Promo Banner - Small at top */}
         <div className="bg-linear-to-r from-blue-100 to-blue-50">
           <div className="px-4 py-2 flex items-center justify-center gap-2">
-            <span className="text-sm font-semibold text-gray-800">🎉 پیشنهاد ویژه:</span>
+            <span className="text-sm font-semibold text-gray-800">
+              🎉 پیشنهاد ویژه:
+            </span>
             <span className="text-xs text-gray-600">{promoText}</span>
           </div>
         </div>
@@ -260,7 +262,7 @@ export const ProductsPage: React.FC<ProductsPageProps> = ({
               </p>
             </div>
           ) : (
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3">
+            <div className="grid grid-cols-2  gap-3">
               {filteredProducts.map((product) => (
                 <ProductCard
                   key={product.id}
